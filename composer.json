@@ -1,0 +1,19 @@
+{
+    "name": "floatingbits/evolutionary-algorithm",
+    "description": "A php implementation of evolutionary algorithms",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "FloatingBits\\EvolutionaryAlgorithm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Soeren Parton",
+            "email": "mail@floatingbitsmedia.de"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
