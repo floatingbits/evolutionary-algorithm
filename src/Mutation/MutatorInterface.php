@@ -1,12 +1,14 @@
 <?php
-
-
 namespace FloatingBits\EvolutionaryAlgorithm\Mutation;
 
-
-use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
-
+/**
+ * @template T of GenotypeInterface
+ */
 interface MutatorInterface
 {
-    public function mutate(SpecimenCollection $specimenCollection): SpecimenCollection;
+    /**
+     * @param T $genotype
+     * @return mixed
+     */
+    public function mutate($genotype);
 }

@@ -7,6 +7,9 @@
             "FloatingBits\\EvolutionaryAlgorithm\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": { "FloatingBits\\EvolutionaryAlgorithm\\Tests\\": "tests/" }
+    },
     "authors": [
         {
             "name": "Soeren Parton",

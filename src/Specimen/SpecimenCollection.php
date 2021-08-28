@@ -1,7 +1,7 @@
 <?php
 namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 
-class SpecimenCollection implements \Iterator
+class SpecimenCollection implements \Iterator, \Countable
 {
     /** @var \ArrayIterator  */
     private $ratableSpecimens;
@@ -10,7 +10,7 @@ class SpecimenCollection implements \Iterator
         $this->ratableSpecimens = new \ArrayIterator();
     }
 
-    public function addSpecimen(RatableSpecimenInterface $specimen) {
+    public function addSpecimen(SpecimenInterface $specimen) {
         $this->ratableSpecimens->append($specimen);
     }
 
@@ -18,8 +18,21 @@ class SpecimenCollection implements \Iterator
         $this->ratableSpecimens->offsetUnset($key);
     }
 
-    public function getSpecimen(int $key): RatableSpecimenInterface {
+    public function getSpecimen(int $key): SpecimenInterface {
         return $this->ratableSpecimens->offsetGet($key);
+    }
+
+    public function sortByRating() {
+        $this->ratableSpecimens->uasort(function(SpecimenInterface $a, SpecimenInterface $b) {
+            if ($a->getEvaluation() > $b->getEvaluation()) {
+                return -1;
+            }
+            elseif ($a->getEvaluation() < $b->getEvaluation()) {
+                return 1;
+            }
+            return 0;
+        });
+
     }
 
     public function current()
@@ -45,6 +58,11 @@ class SpecimenCollection implements \Iterator
     public function rewind()
     {
         $this->ratableSpecimens->rewind();
+    }
+
+    public function count()
+    {
+        return $this->ratableSpecimens->count();
     }
 
 
