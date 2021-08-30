@@ -17,4 +17,5 @@ interface SymbolArrayGenotypeInterface extends GenotypeInterface
     public function setSymbolAt(SymbolInterface $symbol, int $position);
     public function getSymbolLength();
     public function getRandomSymbol();
+    public function initialize(int $length);
 }

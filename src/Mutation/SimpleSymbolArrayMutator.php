@@ -8,7 +8,7 @@ use FloatingBits\EvolutionaryAlgorithm\Genotype\SymbolArrayGenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BooleanRandomizerInterface;
 
 /**
- * @template-implements MutatorInterface<SymbolArrayGenotypeInterface>
+ * @implements MutatorInterface<SymbolArrayGenotypeInterface>
  */
 class SimpleSymbolArrayMutator implements MutatorInterface
 {
@@ -28,6 +28,7 @@ class SimpleSymbolArrayMutator implements MutatorInterface
                //@todo getRandomSymbol should be taken out of genotypes responsibility
                $genotype->setSymbolAt($genotype->getRandomSymbol(),$i);
            }
+           $i++;
         }
     }
 
