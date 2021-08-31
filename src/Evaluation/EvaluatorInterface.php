@@ -10,5 +10,5 @@ interface EvaluatorInterface
      * @param T $phenotype
      * @return mixed
      */
-    public function evaluate($phenotype):float;
+    public function evaluate($phenotype): FitnessInterface;
 }
