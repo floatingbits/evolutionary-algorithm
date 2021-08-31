@@ -6,7 +6,7 @@ namespace FloatingBits\EvolutionaryAlgorithm;
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
-use FloatingBits\EvolutionaryAlgorithm\Recombination\RecombinatorInterface;
+use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SelectorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimen;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimenInterface;
@@ -18,12 +18,12 @@ class Evolver
     /** @var SelectorInterface  */
     private $selector;
 
-    /** @var RecombinatorInterface  */
+    /** @var CollectionRecombinatorInterface  */
     private $recombinator;
 
 
-    public function __construct(SelectorInterface  $selector,
-                                RecombinatorInterface $recombinator) {
+    public function __construct(SelectorInterface               $selector,
+                                CollectionRecombinatorInterface $recombinator) {
         $this->selector = $selector;
         $this->recombinator = $recombinator;
     }
