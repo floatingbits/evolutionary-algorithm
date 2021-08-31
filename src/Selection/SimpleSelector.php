@@ -21,7 +21,7 @@ class SimpleSelector implements SelectorInterface
 
     public function select(SpecimenCollection $specimenCollection): SpecimenCollection
     {
-        $specimenCollection->sortByRating();
+        $specimenCollection->sortByFitness();
 
         $numberOfSurvivors = round($this->survivalRate * count($specimenCollection));
         $newCollection = new SpecimenCollection();
