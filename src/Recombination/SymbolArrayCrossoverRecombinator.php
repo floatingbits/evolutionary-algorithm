@@ -95,7 +95,7 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
      * @param int $startPosition
      * @param int $length
      */
-    private function crossover(&$source, &$target, $startPosition, $length) {
+    private function crossover($source, $target, $startPosition, $length) {
         $position = $startPosition;
         while ($length--) {
             $target->setSymbolAt($source->getSymbolAt($position), $position);
