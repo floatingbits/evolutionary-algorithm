@@ -22,12 +22,12 @@ class SpecimenCollection implements \Iterator, \Countable
         return $this->ratableSpecimens->offsetGet($key);
     }
 
-    public function sortByRating() {
+    public function sortByFitness() {
         $this->ratableSpecimens->uasort(function(SpecimenInterface $a, SpecimenInterface $b) {
-            if ($a->getEvaluation() > $b->getEvaluation()) {
+            if ($a->getEvaluation()->getMainFitness() > $b->getEvaluation()->getMainFitness()) {
                 return -1;
             }
-            elseif ($a->getEvaluation() < $b->getEvaluation()) {
+            elseif ($a->getEvaluation()->getMainFitness() < $b->getEvaluation()->getMainFitness()) {
                 return 1;
             }
             return 0;

@@ -5,6 +5,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
+use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
@@ -52,15 +53,15 @@ class Specimen implements SpecimenInterface
     /**
      * @return float
      */
-    public function getEvaluation():float
+    public function getEvaluation(): FitnessInterface
     {
         return $this->evaluation;
     }
 
     /**
-     * @param float $evaluation
+     * @param FitnessInterface $evaluation
      */
-    public function setEvaluation(float $evaluation): void
+    public function setEvaluation(FitnessInterface $evaluation): void
     {
         $this->evaluation = $evaluation;
     }
