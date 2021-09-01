@@ -6,12 +6,14 @@ namespace FloatingBits\EvolutionaryAlgorithm;
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
+use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SelectorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimen;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimenInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenGeneratorInterface;
+use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
 
 class Evolver
 {
@@ -21,11 +23,25 @@ class Evolver
     /** @var CollectionRecombinatorInterface  */
     private $recombinator;
 
+    /** @var EvaluatorInterface  */
+    private $evaluator;
+
+    /** @var MutatorInterface  */
+    private $mutator;
+
+    /** @var PhenotypeGeneratorInterface  */
+    private $phenotypeGenerator;
 
     public function __construct(SelectorInterface               $selector,
-                                CollectionRecombinatorInterface $recombinator) {
+                                CollectionRecombinatorInterface $recombinator,
+                                EvaluatorInterface $evaluator,
+                                MutatorInterface $mutator,
+                                PhenotypeGeneratorInterface $phenotypeGenerator) {
         $this->selector = $selector;
         $this->recombinator = $recombinator;
+        $this->evaluator = $evaluator;
+        $this->mutator = $mutator;
+        $this->phenotypeGenerator = $phenotypeGenerator;
     }
 
 
@@ -40,8 +56,11 @@ class Evolver
 
     private function evaluate(SpecimenCollection $specimens) {
 
+        /** @var SpecimenInterface $specimen */
         foreach ($specimens as $specimen) {
-            $specimen->evaluate();
+            $phenotype = $this->phenotypeGenerator->generatePhenotype($specimen->getGenotype());
+            $fitness = $this->evaluator->evaluate($phenotype);
+            $specimen->setEvaluation($fitness);
         }
     }
 
@@ -54,8 +73,10 @@ class Evolver
     }
 
     private function mutate(SpecimenCollection $specimens) {
+        /** @var SpecimenInterface $specimen */
         foreach ($specimens as $specimen) {
-            $specimen->mutate();
+            $genotype = $this->mutator->mutate($specimen->getGenotype());
+            $specimen->setGenotype($genotype);
         }
     }
 

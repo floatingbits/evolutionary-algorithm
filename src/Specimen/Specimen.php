@@ -13,7 +13,6 @@ use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
 
 /**
  * @template T0 of GenotypeInterface
- * @template T1 of PhenotypeInterface
  */
 class Specimen implements SpecimenInterface
 {
@@ -21,17 +20,9 @@ class Specimen implements SpecimenInterface
     private $evaluation;
     /** @var T0 */
     private $genotype;
-    /** @var EvaluatorInterface<T1> */
-    private $evaluator;
-    /** @var MutatorInterface<T0> */
-    private $mutator;
-    /** @var PhenotypeGeneratorInterface<T0,T1> */
-    private $phenotypeGenerator;
 
-    public function __construct($evaluator, $mutator, $phenotypeGenerator) {
-        $this->evaluator = $evaluator;
-        $this->mutator = $mutator;
-        $this->phenotypeGenerator = $phenotypeGenerator;
+    public function __construct() {
+
     }
 
     /**
@@ -66,18 +57,7 @@ class Specimen implements SpecimenInterface
         $this->evaluation = $evaluation;
     }
 
-    public function mutate()
-    {
-        $this->mutator->mutate($this->getGenotype());
-    }
 
-    public function evaluate()
-    {
-        /** @var T1 $phenotype */
-        $phenotype = $this->phenotypeGenerator->generatePhenotype($this->getGenotype());
-        $evaluation = $this->evaluator->evaluate($phenotype);
-        $this->setEvaluation($evaluation);
-    }
 
 
 }
