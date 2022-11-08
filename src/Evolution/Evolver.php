@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FloatingBits\EvolutionaryAlgorithm;
+namespace FloatingBits\EvolutionaryAlgorithm\Evolution;
 
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
@@ -15,7 +15,7 @@ use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
 
-class Evolver
+class Evolver implements EvolverInterface
 {
     /** @var SelectorInterface  */
     private $selector;
