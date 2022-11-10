@@ -17,7 +17,7 @@ class IntRandomizer implements ConfigurableIntRandomizerInterface, BiasedRandomi
     private $biasStrategy;
 
     public function __construct(int $max = 0, int $min = 0,  BiasInterface $biasStrategy = null, float $bias = 1) {
-        if ($max = 0 && $min = 0) {
+        if ($max === 0 && $min === 0) {
             $max = mt_getrandmax();
         }
         $this->max = $max;
