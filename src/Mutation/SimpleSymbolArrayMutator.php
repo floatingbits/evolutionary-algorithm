@@ -30,6 +30,7 @@ class SimpleSymbolArrayMutator implements MutatorInterface
            }
            $i++;
         }
+        return $genotype;
     }
 
 
