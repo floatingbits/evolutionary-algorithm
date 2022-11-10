@@ -23,14 +23,15 @@ class SimpleSymbolArrayMutator implements MutatorInterface
     public function mutate($genotype)
     {
         $i = 0;
+        $returnGenotype = clone $genotype;
         while ($i < $genotype->getSymbolLength()) {
            if ($this->mutationProbabilityRandomizer->randomYesOrNo()) {
                //@todo getRandomSymbol should be taken out of genotypes responsibility
-               $genotype->setSymbolAt($genotype->getRandomSymbol(),$i);
+               $returnGenotype->setSymbolAt($genotype->getRandomSymbol(),$i);
            }
            $i++;
         }
-        return $genotype;
+        return $returnGenotype;
     }
 
 
