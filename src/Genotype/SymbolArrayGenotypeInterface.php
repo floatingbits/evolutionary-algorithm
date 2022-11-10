@@ -10,9 +10,14 @@ use FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol\SymbolInterface;
  * @package FloatingBits\EvolutionaryAlgorithm\Genotype
  * @template T
  * @template S
+ * @template-extends GenotypeInterface<T>
  */
 interface SymbolArrayGenotypeInterface extends GenotypeInterface
 {
+    /**
+     * @param int $position
+     * @return SymbolInterface<S>
+     */
     public function getSymbolAt(int $position): SymbolInterface;
     public function setSymbolAt(SymbolInterface $symbol, int $position);
     public function getSymbolLength();
