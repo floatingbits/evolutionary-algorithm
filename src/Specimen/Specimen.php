@@ -6,6 +6,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
+use FloatingBits\EvolutionaryAlgorithm\Evaluation\SimpleFitness;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
@@ -22,7 +23,7 @@ class Specimen implements SpecimenInterface
     private $genotype;
 
     public function __construct() {
-
+        $this->evaluation = new SimpleFitness(0);
     }
 
     /**
