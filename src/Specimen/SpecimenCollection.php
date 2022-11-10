@@ -7,23 +7,23 @@ class SpecimenCollection implements \Iterator, \Countable
     private $ratableSpecimens;
 
     public function __construct() {
-        $this->ratableSpecimens = new \ArrayIterator();
+        $this->ratableSpecimens = [];
     }
 
     public function addSpecimen(SpecimenInterface $specimen) {
-        $this->ratableSpecimens->append($specimen);
+        $this->ratableSpecimens[] = $specimen;
     }
 
     public function removeSpecimen(int $key) {
-        $this->ratableSpecimens->offsetUnset($key);
+        unset($this->ratableSpecimens[$key]);
     }
 
     public function getSpecimen(int $key): SpecimenInterface {
-        return $this->ratableSpecimens->offsetGet($key);
+        return $this->ratableSpecimens[$key];
     }
 
     public function sortByFitness() {
-        $this->ratableSpecimens->uasort(function(SpecimenInterface $a, SpecimenInterface $b) {
+        uasort($this->ratableSpecimens, function(SpecimenInterface $a, SpecimenInterface $b) {
             if ($a->getEvaluation()->getMainFitness() > $b->getEvaluation()->getMainFitness()) {
                 return -1;
             }
@@ -32,37 +32,37 @@ class SpecimenCollection implements \Iterator, \Countable
             }
             return 0;
         });
-
+        $this->ratableSpecimens = array_values($this->ratableSpecimens);
     }
 
     public function current()
     {
-        return $this->ratableSpecimens->current();
+        return current($this->ratableSpecimens);
     }
 
     public function next()
     {
-        $this->ratableSpecimens->next();
+        return next($this->ratableSpecimens);
     }
 
     public function key()
     {
-        return  $this->ratableSpecimens->key();
+        return  key($this->ratableSpecimens);
     }
 
     public function valid()
     {
-        return $this->ratableSpecimens->valid();
+        return isset($this->ratableSpecimens[$this->key()]);
     }
 
     public function rewind()
     {
-        $this->ratableSpecimens->rewind();
+        reset($this->ratableSpecimens);
     }
 
     public function count()
     {
-        return $this->ratableSpecimens->count();
+        return count($this->ratableSpecimens);
     }
 
 
