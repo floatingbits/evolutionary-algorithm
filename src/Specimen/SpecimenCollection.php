@@ -3,7 +3,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 
 class SpecimenCollection implements \Iterator, \Countable
 {
-    /** @var \ArrayIterator  */
+    /** @var SpecimenInterface[]  */
     private $ratableSpecimens;
 
     public function __construct() {
@@ -63,6 +63,10 @@ class SpecimenCollection implements \Iterator, \Countable
     public function count()
     {
         return count($this->ratableSpecimens);
+    }
+
+    public function combine(SpecimenCollection $collection) {
+        $this->ratableSpecimens = array_merge($this->ratableSpecimens, ...array_values((array)$collection));
     }
 
 

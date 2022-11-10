@@ -19,17 +19,30 @@ class SimpleSelector implements SelectorInterface
         $this->survivalRate = $survivalRate;
     }
 
+    /**
+     * @param SpecimenCollection $specimenCollection
+     * @return SpecimenCollection
+     */
     public function select(SpecimenCollection $specimenCollection): SpecimenCollection
     {
+        return $this->internalSelect($specimenCollection, $this->survivalRate);
+    }
+
+    /**
+     * @param SpecimenCollection $specimenCollection
+     * @param float $survivalRate
+     * @return SpecimenCollection
+     */
+    private function internalSelect(SpecimenCollection $specimenCollection, float $survivalRate): SpecimenCollection {
         $specimenCollection->sortByFitness();
 
-        $numberOfSurvivors = round($this->survivalRate * count($specimenCollection));
+        $numberOfSurvivors = round($survivalRate * count($specimenCollection));
         $newCollection = new SpecimenCollection();
         /** @var SpecimenInterface $specimen */
         foreach ($specimenCollection as $key => $specimen) {
             $numberOfSurvivors--;
             if ($numberOfSurvivors >= 0) {
-                $newCollection->addSpecimen($specimen);
+                $newCollection->addSpecimen(clone $specimen);
             }
         }
         return $newCollection;

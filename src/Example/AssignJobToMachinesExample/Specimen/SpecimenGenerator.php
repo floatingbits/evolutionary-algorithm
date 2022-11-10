@@ -15,6 +15,11 @@ class SpecimenGenerator implements SpecimenGeneratorInterface
     private $numJobs;
     /** @var int */
     private $numMachines;
+
+    /**
+     * @param int $numJobs
+     * @param int $numMachines
+     */
     public function __construct(int $numJobs, int $numMachines)
     {
         $this->numJobs = $numJobs;
@@ -23,7 +28,7 @@ class SpecimenGenerator implements SpecimenGeneratorInterface
 
     /**
      * @param int $populationSize
-     * @return \FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection
+     * @return SpecimenCollection
      */
     public function generateSpecimen(int $populationSize)
     {

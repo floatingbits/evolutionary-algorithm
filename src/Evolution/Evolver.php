@@ -9,6 +9,7 @@ use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SelectorInterface;
+use FloatingBits\EvolutionaryAlgorithm\Selection\SimpleSelector;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimen;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimenInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
@@ -32,26 +33,46 @@ class Evolver implements EvolverInterface
     /** @var PhenotypeGeneratorInterface  */
     private $phenotypeGenerator;
 
+    /** @var bool */
+    private $shouldPreventRegression;
+
     public function __construct(SelectorInterface               $selector,
                                 CollectionRecombinatorInterface $recombinator,
                                 EvaluatorInterface $evaluator,
                                 MutatorInterface $mutator,
-                                PhenotypeGeneratorInterface $phenotypeGenerator) {
+                                PhenotypeGeneratorInterface $phenotypeGenerator,
+                                $shouldPreventRegression = true) {
         $this->selector = $selector;
         $this->recombinator = $recombinator;
         $this->evaluator = $evaluator;
         $this->mutator = $mutator;
         $this->phenotypeGenerator = $phenotypeGenerator;
+        $this->shouldPreventRegression = $shouldPreventRegression;
+        if ($shouldPreventRegression) {
+            $this->crossGenerationSelector = new SimpleSelector(0.5);
+        }
     }
 
 
-    public function evolve(SpecimenCollection $specimens) {
-        $populationSize = count($specimens);
-        $this->evaluate($specimens);
-        $specimens = $this->select($specimens);
-        $specimens = $this->recombine($specimens, $populationSize);
-        $this->mutate($specimens);
-        return $specimens;
+    public function evolve(SpecimenCollection $oldGeneration) {
+        $populationSize = count($oldGeneration);
+        $this->evaluate($oldGeneration);
+        $oldGeneration->sortByFitness();
+        $newGeneration = $this->select($oldGeneration);
+        $newGeneration = $this->recombine($newGeneration, $populationSize);
+        $this->mutate($newGeneration);
+        $this->evaluate($newGeneration);
+        $newGeneration->sortByFitness();
+        if ($this->shouldPreventRegression) {
+            $newGeneration = $this->preventRegression($newGeneration, $oldGeneration);
+        }
+        return $newGeneration;
+    }
+
+    private function preventRegression(SpecimenCollection $newGeneration, SpecimenCollection $oldGeneration) {
+        $newGeneration->combine($oldGeneration);
+        $this->evaluate($newGeneration);
+        return $this->crossGenerationSelector->select($newGeneration);
     }
 
     private function evaluate(SpecimenCollection $specimens) {

@@ -23,7 +23,21 @@ $jobs[] = new Job(47.1);
 $jobs[] = new Job(34.2);
 $jobs[] = new Job(2.2);
 $jobs[] = new Job(42.1);
-$jobs[] = new Job(131.4);
+$jobs[] = new Job(121.4);
+$jobs[] = new Job(42.2);
+$jobs[] = new Job(13.5);
+$jobs[] = new Job(8.1);
+$jobs[] = new Job(0.2);
+$jobs[] = new Job(120.3);
+$jobs[] = new Job(2.1);
+$jobs[] = new Job(60.4);
+$jobs[] = new Job(32.2);
+$jobs[] = new Job(113.1);
+$jobs[] = new Job(44.1);
+$jobs[] = new Job(34.2);
+$jobs[] = new Job(22.2);
+$jobs[] = new Job(42.1);
+$jobs[] = new Job(11.4);
 $jobs[] = new Job(42.2);
 $factory = new AssignJobToMachinesEvolverFactory($jobs);
 $evolver = $factory->createEvolver();
@@ -34,9 +48,9 @@ $tournament->setup(50);
 $winnerPopulation = $tournament->getSpecimenCollection();
 printPopulation($winnerPopulation);
 
-for ($i = 0; $i < 1000; $i++) {
-    print('Running 100 rounds' . "\n");
-    $tournament->runTournament(5);
+for ($i = 0; $i < 100; $i++) {
+    print('Running 50 rounds' . "\n");
+    $tournament->runTournament(50);
     $winnerPopulation = $tournament->getSpecimenCollection();
     printPopulation($winnerPopulation, 5);
 }
