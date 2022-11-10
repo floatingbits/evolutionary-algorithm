@@ -65,10 +65,10 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
 
         $crossoverPartsLeft = $this->numberOfCrossovers + 1;
         $currentPosition = 0;
-        $length= $returnGenotype->getSymbolLength();
+        $length = $returnGenotype->getSymbolLength();
         while ($crossoverPartsLeft--) {
-            $this->intRandomizer->setMax($currentPosition - $length);
-            $this->intRandomizer->setMin($currentPosition - $length);
+            $this->intRandomizer->setMax($length - $currentPosition);
+            $this->intRandomizer->setMin(0);
             if ($this->intRandomizer instanceof BiasInterface) {
                 $this->intRandomizer->setBias(
                     $this->considerRating ?
