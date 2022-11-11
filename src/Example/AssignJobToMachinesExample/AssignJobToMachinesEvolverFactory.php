@@ -32,20 +32,20 @@ class AssignJobToMachinesEvolverFactory extends AbstractEvolverFactory
 
     protected function createSelector(): SelectorInterface
     {
-        return new SimpleSelector(0.5);
+        return new SimpleSelector(0.3);
     }
 
     protected function createRecombinator(): CollectionRecombinatorInterface
     {
         return new CollectionRecombinator(
-            new SymbolArrayCrossoverRecombinator(1, new IntRandomizer(), new BooleanRandomizer(), true),
+            new SymbolArrayCrossoverRecombinator(3, new IntRandomizer(), new BooleanRandomizer(), true),
             new IntRandomizer()
         );
     }
 
     protected function createMutator(): MutatorInterface
     {
-        return new SimpleSymbolArrayMutator(new BooleanRandomizer(0.03));
+        return new SimpleSymbolArrayMutator(new BooleanRandomizer(0.1));
     }
 
     protected function createEvaluator(): EvaluatorInterface
@@ -54,7 +54,6 @@ class AssignJobToMachinesEvolverFactory extends AbstractEvolverFactory
     }
     protected function createPhenotypeGenerator(): PhenotypeGeneratorInterface
     {
-
         return new PhenotypeGenerator($this->jobs);
     }
 
