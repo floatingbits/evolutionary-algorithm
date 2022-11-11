@@ -6,5 +6,5 @@ use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 
 interface EvolverInterface
 {
-    public function evolve(SpecimenCollection $specimenCollection);
+    public function evolve(SpecimenCollection $oldGeneration);
 }

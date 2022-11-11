@@ -1,6 +1,6 @@
 <?php
 
-namespace FloatingBits\EvolutionaryAlgorithm\Tests\Selection;
+namespace FloatingBits\EvolutionaryAlgorithm\Tests\unit\Selection;
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\SimpleFitness;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SimpleSelector;
@@ -31,21 +31,22 @@ class SimpleSelectorTest extends TestCase
         $survivingSpecimen2->method('getEvaluation')->willReturn(new SimpleFitness(8.0));
         $specimenCollection->addSpecimen($survivingSpecimen2);
 
-        $dyingSpecimen1 = $this->createMock(Specimen::class);
-        $dyingSpecimen1->method('getEvaluation')->willReturn(new SimpleFitness(5.8));
+        //Using mocks here seems to cause a bug in assertNotContainsEquals :/
+        $dyingSpecimen1 = new Specimen();
+        $dyingSpecimen1->setEvaluation(new SimpleFitness(5.8));
         $specimenCollection->addSpecimen($dyingSpecimen1);
-        $dyingSpecimen2 = $this->createMock(Specimen::class);
-        $dyingSpecimen2->method('getEvaluation')->willReturn(new SimpleFitness(1.0));
+        $dyingSpecimen2 = new Specimen();
+        $dyingSpecimen2->setEvaluation(new SimpleFitness(1));
         $specimenCollection->addSpecimen($dyingSpecimen2);
 
         $specimenCollection = $simpleSelector->select($specimenCollection);
 
         $this->assertCount(2, $specimenCollection);
 
-        $this->assertContains($survivingSpecimen1, $specimenCollection);
-        $this->assertContains($survivingSpecimen2, $specimenCollection );
-        $this->assertNotContains($dyingSpecimen1, $specimenCollection);
-        $this->assertNotContains($dyingSpecimen2, $specimenCollection);
+        $this->assertContainsEquals($survivingSpecimen1, $specimenCollection);
+        $this->assertContainsEquals($survivingSpecimen2, $specimenCollection );
+        $this->assertNotContainsEquals($dyingSpecimen1, $specimenCollection);
+        $this->assertNotContainsEquals($dyingSpecimen2, $specimenCollection);
         
 
     }

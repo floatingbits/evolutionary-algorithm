@@ -2,7 +2,6 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Recombination;
 
-use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 
 /**
  * @template T0 of GenotypeInterface

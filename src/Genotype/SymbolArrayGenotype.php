@@ -3,7 +3,6 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Genotype;
 
-use FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol\SimpleSymbol;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol\SymbolFactoryInterface;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol\SymbolInterface;
 
@@ -39,11 +38,15 @@ class SymbolArrayGenotype implements SymbolArrayGenotypeInterface
      *
      * @return SymbolInterface<T>
      */
-    public function getRandomSymbol()
+    public function getRandomSymbol(): SymbolInterface
     {
         return $this->symbolFactory->getRandomSymbol();
     }
-    public function getSymbolLength()
+
+    /**
+     * @return int
+     */
+    public function getSymbolLength(): int
     {
         return count($this->data);
     }

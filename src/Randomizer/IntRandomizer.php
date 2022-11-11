@@ -22,7 +22,7 @@ class IntRandomizer implements ConfigurableIntRandomizerInterface, BiasedRandomi
         }
         $this->max = $max;
         $this->min = $min;
-        $this->bias = 1;
+        $this->bias = $bias;
         if ($biasStrategy) {
             $this->biasStrategy = $biasStrategy;
         }
@@ -51,7 +51,7 @@ class IntRandomizer implements ConfigurableIntRandomizerInterface, BiasedRandomi
     /**
      * @param int $max
      */
-    public function setMax($max): void
+    public function setMax(int $max): void
     {
         $this->max = $max;
     }

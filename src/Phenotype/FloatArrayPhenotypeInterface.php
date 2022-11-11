@@ -7,5 +7,5 @@ interface FloatArrayPhenotypeInterface extends PhenotypeInterface
     /**
      * @return float[]
      */
-    public function getArray();
+    public function getArray(): array;
 }

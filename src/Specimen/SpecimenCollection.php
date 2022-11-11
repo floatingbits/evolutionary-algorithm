@@ -50,7 +50,7 @@ class SpecimenCollection implements \Iterator, \Countable
         return  key($this->ratableSpecimens);
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->ratableSpecimens[$this->key()]);
     }
@@ -60,7 +60,7 @@ class SpecimenCollection implements \Iterator, \Countable
         reset($this->ratableSpecimens);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->ratableSpecimens);
     }

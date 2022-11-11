@@ -3,14 +3,9 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 
-
-use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\SimpleFitness;
-use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
-use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
-use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
-use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
+
 
 /**
  * @template T0 of GenotypeInterface
@@ -43,7 +38,7 @@ class Specimen implements SpecimenInterface
     }
 
     /**
-     * @return float
+     * @return SimpleFitness
      */
     public function getEvaluation(): FitnessInterface
     {

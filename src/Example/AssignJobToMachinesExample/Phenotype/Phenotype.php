@@ -3,9 +3,7 @@
 namespace FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Phenotype;
 
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genotype\Genotype;
-use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genotype\GenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\FloatArrayPhenotypeInterface;
-use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Problem\Job;
 
 class Phenotype implements FloatArrayPhenotypeInterface
@@ -20,7 +18,10 @@ class Phenotype implements FloatArrayPhenotypeInterface
         $this->jobs = $jobs;
     }
 
-    public function getArray()
+    /**
+     * @return array|float[]
+     */
+    public function getArray(): array
     {
         $times = [];
         for ($i = 0; $i < $this->genotype->getSymbolLength(); $i++ ) {

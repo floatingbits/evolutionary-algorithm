@@ -20,7 +20,7 @@ use FloatingBits\EvolutionaryAlgorithm\Selection\SimpleSelector;
 
 class AssignJobToMachinesEvolverFactory extends AbstractEvolverFactory
 {
-    /** @var Job[] */
+    /** @var Job[] $jobs */
     private $jobs;
 
     /**

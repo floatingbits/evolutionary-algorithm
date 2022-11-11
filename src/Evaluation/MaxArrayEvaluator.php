@@ -7,7 +7,7 @@ use FloatingBits\EvolutionaryAlgorithm\Phenotype\FloatArrayPhenotypeInterface;
 class MaxArrayEvaluator implements EvaluatorInterface
 {
     /** @var bool  */
-    private $invertSign = false;
+    private $invertSign;
 
     public function __construct(bool $invertSign = false) {
         $this->invertSign = $invertSign;

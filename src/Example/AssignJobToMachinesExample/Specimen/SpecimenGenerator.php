@@ -30,7 +30,7 @@ class SpecimenGenerator implements SpecimenGeneratorInterface
      * @param int $populationSize
      * @return SpecimenCollection
      */
-    public function generateSpecimen(int $populationSize)
+    public function generateSpecimen(int $populationSize): SpecimenCollection
     {
         $collection = new SpecimenCollection();
         while($populationSize--) {

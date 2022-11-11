@@ -20,7 +20,7 @@ class SimpleSymbolArrayMutator implements MutatorInterface
     /**
      * @param SymbolArrayGenotypeInterface $genotype
      */
-    public function mutate($genotype)
+    public function mutate($genotype): SymbolArrayGenotypeInterface
     {
         $i = 0;
         $returnGenotype = clone $genotype;

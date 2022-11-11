@@ -6,9 +6,7 @@ use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\SymbolArrayGenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BiasInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BooleanRandomizerInterface;
-use FloatingBits\EvolutionaryAlgorithm\Randomizer\ConfigurableBooleanRandomizerInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\ConfigurableIntRandomizerInterface;
-use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizerInterface;
 
 /**
  * @implements IndividualRecombinatorInterface<SymbolArrayGenotypeInterface, FitnessInterface>
@@ -21,7 +19,7 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
      */
     private $intRandomizer;
     /**
-     * @var ConfigurableBooleanRandomizerInterface
+     * @var BooleanRandomizerInterface
      */
     private $booleanRandomizer;
 
@@ -53,7 +51,7 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
      * @param FitnessInterface|null $rating2
      * @return SymbolArrayGenotypeInterface
      */
-    public function recombine($genotype1, $genotype2, $rating1 = null, $rating2 = null)
+    public function recombine($genotype1, $genotype2, $rating1 = null, $rating2 = null): SymbolArrayGenotypeInterface
     {
         $startWith1 = $this->booleanRandomizer->randomYesOrNo();
 
@@ -95,7 +93,7 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
      * @param int $startPosition
      * @param int $length
      */
-    private function crossover($source, $target, $startPosition, $length) {
+    private function crossover(SymbolArrayGenotypeInterface $source,SymbolArrayGenotypeInterface $target,int $startPosition,int $length) {
         $position = $startPosition;
         while ($length--) {
             $target->setSymbolAt($source->getSymbolAt($position), $position);

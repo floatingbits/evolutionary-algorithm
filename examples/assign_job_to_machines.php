@@ -1,9 +1,11 @@
 <?php
-use \FloatingBits\EvolutionaryAlgorithm\Evolution\Tournament;
+use FloatingBits\EvolutionaryAlgorithm\Evolution\Tournament;
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\AssignJobToMachinesEvolverFactory;
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Problem\Job;
-use \FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Specimen\SpecimenGenerator;
-
+use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Specimen\SpecimenGenerator;
+use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
+use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
+use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genotype\Genotype;
 require_once '../vendor/autoload.php';
 $jobs = [];
 $jobs[] = new Job(33.1);
@@ -55,14 +57,14 @@ for ($i = 0; $i < 100; $i++) {
     printPopulation($winnerPopulation, 5);
 }
 
-function printPopulation(\FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection $population, $max = 0) {
-    /** @var \FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface $specimen */
+function printPopulation(SpecimenCollection $population, $max = 0) {
+    /** @var SpecimenInterface $specimen */
     $population->sortByFitness();
     foreach ($population as $key => $specimen) {
         if ($max && $key >= $max) {
             break;
         }
-        /** @var \FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genotype\Genotype $genotype */
+        /** @var Genotype $genotype */
         $genotype = $specimen->getGenotype();
         print("Specimen " . $key . ": Evaluation " . $specimen->getEvaluation()->getMainFitness());
         print("\n");

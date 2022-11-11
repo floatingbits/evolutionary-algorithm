@@ -3,7 +3,6 @@
 namespace FloatingBits\EvolutionaryAlgorithm\Recombination;
 
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\ConfigurableIntRandomizerInterface;
-use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizerInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
 
@@ -58,7 +57,7 @@ class CollectionRecombinator implements CollectionRecombinatorInterface
     /**
      * @param SpecimenCollection $specimenCollection
      * @param int $chooseFromNFirstIndeces
-     * @return array
+     * @return SpecimenInterface[]
      */
     private function chooseRecombinationCouple(SpecimenCollection $specimenCollection, int $chooseFromNFirstIndeces) {
         $this->intRandomizer->setMax($chooseFromNFirstIndeces - 1);

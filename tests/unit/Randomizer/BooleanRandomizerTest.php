@@ -1,6 +1,6 @@
 <?php
 
-namespace FloatingBits\EvolutionaryAlgorithm\Tests\Randomizer;
+namespace FloatingBits\EvolutionaryAlgorithm\Tests\unit\Randomizer;
 
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BooleanRandomizer;
 use PHPUnit\Framework\TestCase;

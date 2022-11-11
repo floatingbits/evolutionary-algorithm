@@ -18,6 +18,7 @@ class Tournament
 
     /**
      * @param EvolverInterface $evolver
+     * @param SpecimenGeneratorInterface $specimenGenerator
      */
     public function __construct(EvolverInterface $evolver, SpecimenGeneratorInterface $specimenGenerator) {
         $this->evolver = $evolver;
@@ -37,7 +38,7 @@ class Tournament
     /**
      * @return SpecimenCollection
      */
-    public function getSpecimenCollection() {
+    public function getSpecimenCollection(): SpecimenCollection {
         return $this->specimenCollection;
     }
 

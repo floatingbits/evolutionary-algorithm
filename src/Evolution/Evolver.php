@@ -10,10 +10,7 @@ use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SelectorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SimpleSelector;
-use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimen;
-use FloatingBits\EvolutionaryAlgorithm\Specimen\RatableSpecimenInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
-use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
 
 class Evolver implements EvolverInterface
@@ -36,6 +33,9 @@ class Evolver implements EvolverInterface
     /** @var bool */
     private $shouldPreventRegression;
 
+    /** @var SimpleSelector  */
+    private $crossGenerationSelector;
+
     public function __construct(SelectorInterface               $selector,
                                 CollectionRecombinatorInterface $recombinator,
                                 EvaluatorInterface $evaluator,
@@ -53,8 +53,11 @@ class Evolver implements EvolverInterface
         }
     }
 
-
-    public function evolve(SpecimenCollection $oldGeneration) {
+    /**
+     * @param SpecimenCollection $oldGeneration
+     * @return SpecimenCollection
+     */
+    public function evolve(SpecimenCollection $oldGeneration): SpecimenCollection {
         $populationSize = count($oldGeneration);
         $this->evaluate($oldGeneration);
         $oldGeneration->sortByFitness();
@@ -69,7 +72,12 @@ class Evolver implements EvolverInterface
         return $newGeneration;
     }
 
-    private function preventRegression(SpecimenCollection $newGeneration, SpecimenCollection $oldGeneration) {
+    /**
+     * @param SpecimenCollection $newGeneration
+     * @param SpecimenCollection $oldGeneration
+     * @return SpecimenCollection
+     */
+    private function preventRegression(SpecimenCollection $newGeneration, SpecimenCollection $oldGeneration):SpecimenCollection {
         $newGeneration->combine($oldGeneration);
         $this->evaluate($newGeneration);
         return $this->crossGenerationSelector->select($newGeneration);
@@ -85,11 +93,20 @@ class Evolver implements EvolverInterface
         }
     }
 
-    private function select(SpecimenCollection $specimens) {
+    /**
+     * @param SpecimenCollection $specimens
+     * @return SpecimenCollection
+     */
+    private function select(SpecimenCollection $specimens):SpecimenCollection {
         return $this->selector->select($specimens);
     }
 
-    private function recombine(SpecimenCollection $specimens, int $populationSize) {
+    /**
+     * @param SpecimenCollection $specimens
+     * @param int $populationSize
+     * @return SpecimenCollection
+     */
+    private function recombine(SpecimenCollection $specimens, int $populationSize):SpecimenCollection {
         return $this->recombinator->recombine($specimens, $populationSize);
     }
 

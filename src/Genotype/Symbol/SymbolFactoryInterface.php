@@ -9,5 +9,5 @@ interface SymbolFactoryInterface
     /**
      * @return SymbolInterface<T>
      */
-    public function getRandomSymbol();
+    public function getRandomSymbol(): SymbolInterface;
 }

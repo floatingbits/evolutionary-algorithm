@@ -39,7 +39,7 @@ class SimpleSelector implements SelectorInterface
         $numberOfSurvivors = round($survivalRate * count($specimenCollection));
         $newCollection = new SpecimenCollection();
         /** @var SpecimenInterface $specimen */
-        foreach ($specimenCollection as $key => $specimen) {
+        foreach ($specimenCollection as $specimen) {
             $numberOfSurvivors--;
             if ($numberOfSurvivors >= 0) {
                 $newCollection->addSpecimen(clone $specimen);

@@ -24,7 +24,6 @@ class SimpleSymbolArrayGenotypeMutatorTest extends TestCase
         $intRandomizer->method('randomInt')
             ->willReturnOnConsecutiveCalls($firstGeneValue, $secondGeneValue, $thirdGeneValue, $mutatedGeneValue);
 
-        /** @var SymbolArrayGenotype<int> $genotype */
         $genotype = new SymbolArrayGenotype(new IntSymbolFactory($intRandomizer));
         $genotype->initialize(3);
         $booleanRandomizer = $this->createMock(BooleanRandomizer::class);
@@ -32,10 +31,10 @@ class SimpleSymbolArrayGenotypeMutatorTest extends TestCase
             ->willReturnOnConsecutiveCalls(false, true, false);
 
         $mutator = new SimpleSymbolArrayMutator($booleanRandomizer);
-        $mutator->mutate($genotype);
+        $genotype = $mutator->mutate($genotype);
 
-        $this->assertEquals($genotype->getSymbolAt(0)->getValue(), $firstGeneValue);
-        $this->assertEquals($genotype->getSymbolAt(1)->getValue(), $mutatedGeneValue);
-        $this->assertEquals($genotype->getSymbolAt(2)->getValue(), $thirdGeneValue);
+        $this->assertEquals($firstGeneValue, $genotype->getSymbolAt(0)->getValue());
+        $this->assertEquals($mutatedGeneValue, $genotype->getSymbolAt(1)->getValue());
+        $this->assertEquals($thirdGeneValue, $genotype->getSymbolAt(2)->getValue());
     }
 }

@@ -19,7 +19,7 @@ class IntSymbolFactory implements SymbolFactoryInterface
     /**
      * @return SimpleSymbol<int>
      */
-    public function getRandomSymbol()
+    public function getRandomSymbol(): SimpleSymbol
     {
         return new SimpleSymbol($this->randomizer->randomInt());
     }
