@@ -1,7 +1,8 @@
 <?php
 
 namespace FloatingBits\EvolutionaryAlgorithm\Recombination;
-
+use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
+use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 
 /**
  * @template T0 of GenotypeInterface

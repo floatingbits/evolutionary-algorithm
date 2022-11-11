@@ -42,7 +42,7 @@ class SpecimenCollection implements \Iterator, \Countable
 
     public function next()
     {
-        return next($this->ratableSpecimens);
+        next($this->ratableSpecimens);
     }
 
     public function key()

@@ -3,6 +3,9 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Phenotype;
 
+use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
+use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
+
 /**
  * @template T0 of GenotypeInterface
  * @template T1 of PhenotypeInterface
@@ -10,7 +13,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Phenotype;
 interface PhenotypeGeneratorInterface
 {
     /**
-     * @param  T0
+     * @param T0 $genotype
      * @return T1
      */
     public function generatePhenotype($genotype);

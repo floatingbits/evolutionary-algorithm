@@ -5,6 +5,8 @@ namespace FloatingBits\EvolutionaryAlgorithm\Recombination;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\ConfigurableIntRandomizerInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
+use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
+use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 
 /**
  * @template T0 of GenotypeInterface
@@ -40,7 +42,6 @@ class CollectionRecombinator implements CollectionRecombinatorInterface
     {
         $currentCount = $originalCount = count($specimenCollection);
         while ($currentCount < $populationSize) {
-            /** @var SpecimenInterface $specimen1, $specimen2 */
             list($specimen1, $specimen2) = $this->chooseRecombinationCouple($specimenCollection, $originalCount);
             $newGenotype = $this->individualRecombinator->recombine(
                 $specimen1->getGenotype(), $specimen2->getGenotype(),

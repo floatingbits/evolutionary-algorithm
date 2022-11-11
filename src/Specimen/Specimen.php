@@ -5,14 +5,14 @@ namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\SimpleFitness;
-
+use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
 
 /**
  * @template T0 of GenotypeInterface
  */
 class Specimen implements SpecimenInterface
 {
-    /** @var float */
+    /** @var FitnessInterface */
     private $evaluation;
     /** @var T0 */
     private $genotype;
@@ -38,7 +38,7 @@ class Specimen implements SpecimenInterface
     }
 
     /**
-     * @return SimpleFitness
+     * @return FitnessInterface
      */
     public function getEvaluation(): FitnessInterface
     {

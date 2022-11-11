@@ -1,6 +1,6 @@
 <?php
 namespace FloatingBits\EvolutionaryAlgorithm\Mutation;
-
+use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
 /**
  * @template T of GenotypeInterface
  */

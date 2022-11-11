@@ -2,13 +2,14 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Phenotype;
 
+use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genotype\Genotype;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\FloatArrayPhenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Problem\Job;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
 
 /**
- * @implements PhenotypeGeneratorInterface<GenotypeInterface, PhenotypeInterface>
+ * @implements PhenotypeGeneratorInterface<Genotype, FloatArrayPhenotypeInterface>
  */
 class PhenotypeGenerator implements PhenotypeGeneratorInterface
 {

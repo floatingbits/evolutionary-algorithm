@@ -4,6 +4,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Recombination;
 
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\SymbolArrayGenotypeInterface;
+use FloatingBits\EvolutionaryAlgorithm\Randomizer\BiasedRandomizerInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BiasInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BooleanRandomizerInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\ConfigurableIntRandomizerInterface;
@@ -67,7 +68,7 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
         while ($crossoverPartsLeft--) {
             $this->intRandomizer->setMax($length - $currentPosition);
             $this->intRandomizer->setMin(0);
-            if ($this->intRandomizer instanceof BiasInterface) {
+            if ($this->intRandomizer instanceof BiasedRandomizerInterface) {
                 $this->intRandomizer->setBias(
                     $this->considerRating ?
                     $currentRating->getMainFitness() / $nextRating->getMainFitness() : 1
