@@ -7,4 +7,6 @@ use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 interface EvolverInterface
 {
     public function evolve(SpecimenCollection $oldGeneration);
+    public function setProtectFromMutationRate($protectFromMutationRate): void;
+    public function cleanup(SpecimenCollection $oldGeneration);
 }

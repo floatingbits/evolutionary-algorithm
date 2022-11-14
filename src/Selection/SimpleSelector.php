@@ -21,29 +21,48 @@ class SimpleSelector implements SelectorInterface
 
     /**
      * @param SpecimenCollection $specimenCollection
+     * @param bool $removeDuplicates
      * @return SpecimenCollection
      */
-    public function select(SpecimenCollection $specimenCollection): SpecimenCollection
+    public function select(SpecimenCollection $specimenCollection, bool $removeDuplicates = true): SpecimenCollection
     {
-        return $this->internalSelect($specimenCollection, $this->survivalRate);
+        $numberOfSurvivors = round($this->survivalRate * count($specimenCollection));
+        return $this->selectByNumber($specimenCollection, $numberOfSurvivors, $removeDuplicates);
     }
 
     /**
      * @param SpecimenCollection $specimenCollection
-     * @param float $survivalRate
+     * @param int $numberOfSurvivors
+     * @param bool $removeDuplicates
      * @return SpecimenCollection
      */
-    private function internalSelect(SpecimenCollection $specimenCollection, float $survivalRate): SpecimenCollection {
+    private function selectByNumber(SpecimenCollection $specimenCollection, int $numberOfSurvivors, bool $removeDuplicates): SpecimenCollection {
         $specimenCollection->sortByFitness();
 
-        $numberOfSurvivors = round($survivalRate * count($specimenCollection));
         $newCollection = new SpecimenCollection();
+        /** @var SpecimenInterface $lastSpecimen */
+        $lastSpecimen = null;
+        $numberOfFilteredSpecimen = 0;
         /** @var SpecimenInterface $specimen */
         foreach ($specimenCollection as $specimen) {
-            $numberOfSurvivors--;
-            if ($numberOfSurvivors >= 0) {
-                $newCollection->addSpecimen(clone $specimen);
+            if ($numberOfSurvivors > 0 &&
+                (!$removeDuplicates ||
+                !$lastSpecimen ||
+                $lastSpecimen->getEvaluation()->getMainFitness() !== $specimen->getEvaluation()->getMainFitness() ||
+                !$lastSpecimen->getGenotype()->equals($specimen->getGenotype()))
+
+            )   {
+                    $numberOfSurvivors--;
+                    $lastSpecimen = clone $specimen;
+                    $newCollection->addSpecimen($lastSpecimen);
+
             }
+            else {
+                if ($numberOfSurvivors > 0) {
+                    $numberOfFilteredSpecimen++;
+                }
+            }
+
         }
         return $newCollection;
     }

@@ -4,6 +4,8 @@
 namespace FloatingBits\EvolutionaryAlgorithm\Evolution;
 
 
+use FloatingBits\EvolutionaryAlgorithm\Cleanup\CleanupInterface;
+use FloatingBits\EvolutionaryAlgorithm\Cleanup\DefaultCleanup;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\EvaluatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Mutation\MutatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
@@ -30,28 +32,40 @@ class Evolver implements EvolverInterface
     /** @var PhenotypeGeneratorInterface  */
     private $phenotypeGenerator;
 
-    /** @var bool */
-    private $shouldPreventRegression;
-
-    /** @var SimpleSelector  */
-    private $crossGenerationSelector;
-
+    /** @var float */
+    private $protectFromMutationRate;
+    /** @var CleanupInterface */
+    private $cleanupStrategy;
     public function __construct(SelectorInterface               $selector,
                                 CollectionRecombinatorInterface $recombinator,
                                 EvaluatorInterface $evaluator,
                                 MutatorInterface $mutator,
                                 PhenotypeGeneratorInterface $phenotypeGenerator,
-                                $shouldPreventRegression = true) {
+                                $protectFromMutationRate = 0,
+                                CleanupInterface $cleanupStrategy = null) {
         $this->selector = $selector;
         $this->recombinator = $recombinator;
         $this->evaluator = $evaluator;
         $this->mutator = $mutator;
         $this->phenotypeGenerator = $phenotypeGenerator;
-        $this->shouldPreventRegression = $shouldPreventRegression;
-        if ($shouldPreventRegression) {
-            $this->crossGenerationSelector = new SimpleSelector(0.5);
-        }
+        $this->protectFromMutationRate = $protectFromMutationRate;
+        $this->cleanupStrategy = $cleanupStrategy ?? new DefaultCleanup();
     }
+
+    public function cleanup(SpecimenCollection $oldGeneration)
+    {
+        $populationSize = count($oldGeneration);
+        return $this->recombine($this->cleanupStrategy->cleanup($oldGeneration), $populationSize);
+    }
+
+    /**
+     * @param float $protectFromMutationRate
+     */
+    public function setProtectFromMutationRate($protectFromMutationRate): void
+    {
+        $this->protectFromMutationRate = $protectFromMutationRate;
+    }
+
 
     /**
      * @param SpecimenCollection $oldGeneration
@@ -66,9 +80,7 @@ class Evolver implements EvolverInterface
         $this->mutate($newGeneration);
         $this->evaluate($newGeneration);
         $newGeneration->sortByFitness();
-        if ($this->shouldPreventRegression) {
-            $newGeneration = $this->preventRegression($newGeneration, $oldGeneration);
-        }
+
         return $newGeneration;
     }
 
@@ -78,9 +90,19 @@ class Evolver implements EvolverInterface
      * @return SpecimenCollection
      */
     private function preventRegression(SpecimenCollection $newGeneration, SpecimenCollection $oldGeneration):SpecimenCollection {
-        $newGeneration->combine($oldGeneration);
+
         $this->evaluate($newGeneration);
-        return $this->crossGenerationSelector->select($newGeneration);
+        $maxPreservedSpecimen = $preservedSpecimenCount = 5;
+        while ($preservedSpecimenCount) {}
+        if ($newGeneration->getSpecimen($maxPreservedSpecimen - $preservedSpecimenCount)->getEvaluation()->getMainFitness() <
+                $oldGeneration->getSpecimen($maxPreservedSpecimen - $preservedSpecimenCount)->getEvaluation()->getMainFitness()
+        ) {
+            $newGeneration->removeSpecimen($newGeneration->count() - 1 - $maxPreservedSpecimen + $preservedSpecimenCount);
+            $newGeneration->addSpecimen($oldGeneration->getSpecimen($maxPreservedSpecimen - $preservedSpecimenCount));
+            $preservedSpecimenCount--;
+        }
+
+        return $newGeneration;
     }
 
     private function evaluate(SpecimenCollection $specimens) {
@@ -98,7 +120,7 @@ class Evolver implements EvolverInterface
      * @return SpecimenCollection
      */
     private function select(SpecimenCollection $specimens):SpecimenCollection {
-        return $this->selector->select($specimens);
+        return $this->selector->select($specimens, false);
     }
 
     /**
@@ -111,10 +133,14 @@ class Evolver implements EvolverInterface
     }
 
     private function mutate(SpecimenCollection $specimens) {
+        $numberOfProtectedSpecimen = floor($this->protectFromMutationRate * $specimens->count());
         /** @var SpecimenInterface $specimen */
-        foreach ($specimens as $specimen) {
-            $genotype = $this->mutator->mutate($specimen->getGenotype());
-            $specimen->setGenotype($genotype);
+        foreach ($specimens as $key => $specimen) {
+            if ($key >= $numberOfProtectedSpecimen) {
+                $genotype = $this->mutator->mutate($specimen->getGenotype());
+                $specimen->setGenotype($genotype);
+            }
+
         }
     }
 

@@ -69,9 +69,17 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
             $this->intRandomizer->setMax($length - $currentPosition);
             $this->intRandomizer->setMin(0);
             if ($this->intRandomizer instanceof BiasedRandomizerInterface) {
+                $ratingRatio = 1;
+                if ($this->considerRating) {
+                    $ratingRatio =  $currentRating->getMainFitness() / $nextRating->getMainFitness();
+                    if ($currentRating->getMainFitness() < 0) {
+                        //Fitness is actually cost!
+                        $ratingRatio = 1/$ratingRatio;
+                    }
+                }
+
                 $this->intRandomizer->setBias(
-                    $this->considerRating ?
-                    $currentRating->getMainFitness() / $nextRating->getMainFitness() : 1
+                    $ratingRatio
                 );
             }
             $increment = $this->intRandomizer->randomInt();

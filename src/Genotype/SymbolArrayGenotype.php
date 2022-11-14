@@ -31,7 +31,20 @@ class SymbolArrayGenotype implements SymbolArrayGenotypeInterface
             $this->data[$i] = $this->getRandomSymbol();
         }
     }
-
+    public function equals(GenotypeInterface $otherGenotype): bool
+    {
+        if ($otherGenotype instanceof static) {
+            if ($this->getSymbolLength() === $otherGenotype->getSymbolLength()) {
+                for ($i = 0; $i < $this->getSymbolLength(); $i++) {
+                    if ($this->getSymbolAt($i)->getValue() != $otherGenotype->getSymbolAt($i)->getValue()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * @todo Implementation via strategy

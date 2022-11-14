@@ -29,9 +29,12 @@ class Tournament
         $this->specimenCollection = $this->specimenGenerator->generateSpecimen($populationSize);
     }
 
-    public function runTournament($numRounds) {
-        for ($i= 0; $i<$numRounds; $i++) {
+    public function runTournament($numRounds, $cleanupAfterNRounds) {
+        for ($i = 0; $i<$numRounds; $i++) {
             $this->specimenCollection = $this->evolver->evolve($this->specimenCollection);
+            if ($i > 0 && ($i % $cleanupAfterNRounds === 0)) {
+                $this->specimenCollection = $this->evolver->cleanup($this->specimenCollection);
+            }
         }
     }
 

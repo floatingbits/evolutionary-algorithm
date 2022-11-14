@@ -6,7 +6,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Tests\unit\Mutation;
 
 use FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol\IntSymbolFactory;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\SymbolArrayGenotype;
-use FloatingBits\EvolutionaryAlgorithm\Mutation\SimpleSymbolArrayMutator;
+use FloatingBits\EvolutionaryAlgorithm\Mutation\SwapSymbolArrayMutator;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BooleanRandomizer;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizer;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ class SimpleSymbolArrayGenotypeMutatorTest extends TestCase
         $booleanRandomizer->method('randomYesOrNo')
             ->willReturnOnConsecutiveCalls(false, true, false);
 
-        $mutator = new SimpleSymbolArrayMutator($booleanRandomizer);
+        $mutator = new SwapSymbolArrayMutator($booleanRandomizer);
         $genotype = $mutator->mutate($genotype);
 
         $this->assertEquals($firstGeneValue, $genotype->getSymbolAt(0)->getValue());

@@ -8,6 +8,11 @@ use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 
 interface SelectorInterface
 {
-    public function select(SpecimenCollection $specimenCollection): SpecimenCollection;
+    /**
+     * @param SpecimenCollection $specimenCollection
+     * @param bool $removeDuplicates
+     * @return SpecimenCollection
+     */
+    public function select(SpecimenCollection $specimenCollection, bool $removeDuplicates = true): SpecimenCollection;
 
 }

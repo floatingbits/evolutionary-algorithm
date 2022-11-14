@@ -52,7 +52,7 @@ printPopulation($winnerPopulation);
 
 for ($i = 0; $i < 100; $i++) {
     print('Running 50 rounds' . "\n");
-    $tournament->runTournament(50);
+    $tournament->runTournament(50, 49);
     $winnerPopulation = $tournament->getSpecimenCollection();
     printPopulation($winnerPopulation, 5);
 }

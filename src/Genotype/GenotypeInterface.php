@@ -12,5 +12,5 @@ namespace FloatingBits\EvolutionaryAlgorithm\Genotype;
  */
 interface GenotypeInterface
 {
-
+    public function equals(GenotypeInterface $otherGenotype): bool;
 }
