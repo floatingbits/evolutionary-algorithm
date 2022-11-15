@@ -47,14 +47,14 @@ $numMachines = 5;
 $specimenGenerator = new SpecimenGenerator(count($jobs), $numMachines);
 $tournament = new Tournament($evolver, $specimenGenerator);
 $tournament->setup(50);
-$winnerPopulation = $tournament->getSpecimenCollection();
-printPopulation($winnerPopulation);
+$currentPopulation = $tournament->getSpecimenCollection();
+printPopulation($currentPopulation);
 
 for ($i = 0; $i < 100; $i++) {
     print('Running 50 rounds' . "\n");
     $tournament->runTournament(50, 49);
-    $winnerPopulation = $tournament->getSpecimenCollection();
-    printPopulation($winnerPopulation, 5);
+    $currentPopulation = $tournament->getSpecimenCollection();
+    printPopulation($currentPopulation, 7);
 }
 
 function printPopulation(SpecimenCollection $population, $max = 0) {

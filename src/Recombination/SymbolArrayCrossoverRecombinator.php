@@ -66,23 +66,31 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
         $currentPosition = 0;
         $length = $returnGenotype->getSymbolLength();
         while ($crossoverPartsLeft--) {
-            $this->intRandomizer->setMax($length - $currentPosition);
-            $this->intRandomizer->setMin(0);
-            if ($this->intRandomizer instanceof BiasedRandomizerInterface) {
-                $ratingRatio = 1;
-                if ($this->considerRating) {
-                    $ratingRatio =  $currentRating->getMainFitness() / $nextRating->getMainFitness();
-                    if ($currentRating->getMainFitness() < 0) {
-                        //Fitness is actually cost!
-                        $ratingRatio = 1/$ratingRatio;
-                    }
-                }
+            if ($crossoverPartsLeft) {
+                $avgIncrement = ($length - $currentPosition) / ($crossoverPartsLeft + 1);
 
-                $this->intRandomizer->setBias(
-                    $ratingRatio
-                );
+                $maxIncrement = min(2 * $avgIncrement, $length - $currentPosition);
+                $this->intRandomizer->setMax($maxIncrement);
+                $this->intRandomizer->setMin(0);
+                if ($this->intRandomizer instanceof BiasedRandomizerInterface) {
+                    $ratingRatio = 1;
+                    if ($this->considerRating) {
+                        $ratingRatio = $nextRating->getMainFitness() / $currentRating->getMainFitness();
+                        if ($currentRating->getMainFitness() < 0) {
+                            //Fitness is actually cost!
+                            $ratingRatio = 1 / $ratingRatio;
+                        }
+                    }
+
+                    $this->intRandomizer->setBias(
+                        $ratingRatio
+                    );
+                }
+                $increment = $this->intRandomizer->randomInt();
             }
-            $increment = $this->intRandomizer->randomInt();
+            else {
+                $increment = $length - $currentPosition;
+            }
             $this->crossover($currentGenotype, $returnGenotype, $currentPosition, $increment);
             $this->swap($currentGenotype, $nextGenotype);
             $this->swap($currentRating, $nextRating);

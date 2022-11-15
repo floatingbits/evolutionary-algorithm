@@ -24,7 +24,7 @@ class Specimen implements SpecimenInterface
     /**
      * @return T0
      */
-    public function getGenotype()
+    public function getGenotype(): GenotypeInterface
     {
         return $this->genotype;
     }

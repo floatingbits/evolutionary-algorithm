@@ -14,12 +14,12 @@ use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizerInterface;
  */
 class SwapSymbolArrayMutator implements MutatorInterface
 {
-    /** @var BooleanRandomizerInterface  */
-    private $mutationProbabilityRandomizer;
+    /** @var int  */
+    private $ratioOfSwaps;
     /** @var ConfigurableIntRandomizerInterface  */
     private $swapPartnerRandomizer;
-    public function __construct(BooleanRandomizerInterface $mutationProbabilityRandomizer, ConfigurableIntRandomizerInterface $swapPartnerRandomizer) {
-        $this->mutationProbabilityRandomizer = $mutationProbabilityRandomizer;
+    public function __construct(float $ratioOfSwaps, ConfigurableIntRandomizerInterface $swapPartnerRandomizer) {
+        $this->ratioOfSwaps = $ratioOfSwaps;
         $this->swapPartnerRandomizer = $swapPartnerRandomizer;
     }
 
@@ -28,18 +28,16 @@ class SwapSymbolArrayMutator implements MutatorInterface
      */
     public function mutate($genotype): SymbolArrayGenotypeInterface
     {
-        $i = 0;
         $returnGenotype = clone $genotype;
         $this->swapPartnerRandomizer->setMax($genotype->getSymbolLength() - 1);
-        while ($i < $genotype->getSymbolLength()) {
-           if ($this->mutationProbabilityRandomizer->randomYesOrNo()) {
-               $oldSymbol = $returnGenotype->getSymbolAt($i);
-               $swapPosition = $this->swapPartnerRandomizer->randomInt();
-               $swapSymbol = $returnGenotype->getSymbolAt($swapPosition);
-               $returnGenotype->setSymbolAt($swapSymbol,$i);
-               $returnGenotype->setSymbolAt($oldSymbol,$swapPosition);
-           }
-           $i++;
+        $numberOfSwaps = round($this->ratioOfSwaps * $returnGenotype->getSymbolLength());
+        while ($numberOfSwaps--) {
+            $oldPosition = $this->swapPartnerRandomizer->randomInt();
+            $oldSymbol = $returnGenotype->getSymbolAt($oldPosition);
+            $swapPosition = $this->swapPartnerRandomizer->randomInt();
+            $swapSymbol = $returnGenotype->getSymbolAt($swapPosition);
+            $returnGenotype->setSymbolAt($swapSymbol,$oldPosition);
+            $returnGenotype->setSymbolAt($oldSymbol,$swapPosition);
         }
         return $returnGenotype;
     }

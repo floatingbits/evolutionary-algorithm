@@ -12,6 +12,7 @@ use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SelectorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SimpleSelector;
+use FloatingBits\EvolutionaryAlgorithm\Specimen\CollectionReplenishInterface;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenInterface;
 
@@ -20,52 +21,38 @@ class Evolver implements EvolverInterface
     /** @var SelectorInterface  */
     private $selector;
 
-    /** @var CollectionRecombinatorInterface  */
-    private $recombinator;
+    /** @var CollectionReplenishInterface[]  */
+    private $replenishers;
+
+    /** @var CollectionReplenishInterface[]  */
+    private $creativeReplenishers;
 
     /** @var EvaluatorInterface  */
     private $evaluator;
 
-    /** @var MutatorInterface  */
-    private $mutator;
-
     /** @var PhenotypeGeneratorInterface  */
     private $phenotypeGenerator;
-
-    /** @var float */
-    private $protectFromMutationRate;
     /** @var CleanupInterface */
     private $cleanupStrategy;
     public function __construct(SelectorInterface               $selector,
-                                CollectionRecombinatorInterface $recombinator,
+                                array $replenishers,
                                 EvaluatorInterface $evaluator,
-                                MutatorInterface $mutator,
                                 PhenotypeGeneratorInterface $phenotypeGenerator,
-                                $protectFromMutationRate = 0,
+                                array $creativeReplenishers = [],
                                 CleanupInterface $cleanupStrategy = null) {
         $this->selector = $selector;
-        $this->recombinator = $recombinator;
+        $this->replenishers = $replenishers;
         $this->evaluator = $evaluator;
-        $this->mutator = $mutator;
         $this->phenotypeGenerator = $phenotypeGenerator;
-        $this->protectFromMutationRate = $protectFromMutationRate;
+        $this->creativeReplenishers = $creativeReplenishers;
         $this->cleanupStrategy = $cleanupStrategy ?? new DefaultCleanup();
     }
 
     public function cleanup(SpecimenCollection $oldGeneration)
     {
         $populationSize = count($oldGeneration);
-        return $this->recombine($this->cleanupStrategy->cleanup($oldGeneration), $populationSize);
+        return $this->replenish($this->cleanupStrategy->cleanup($oldGeneration), $populationSize, true);
     }
-
-    /**
-     * @param float $protectFromMutationRate
-     */
-    public function setProtectFromMutationRate($protectFromMutationRate): void
-    {
-        $this->protectFromMutationRate = $protectFromMutationRate;
-    }
-
 
     /**
      * @param SpecimenCollection $oldGeneration
@@ -76,34 +63,11 @@ class Evolver implements EvolverInterface
         $this->evaluate($oldGeneration);
         $oldGeneration->sortByFitness();
         $newGeneration = $this->select($oldGeneration);
-        $newGeneration = $this->recombine($newGeneration, $populationSize);
-        $this->mutate($newGeneration);
-        $this->evaluate($newGeneration);
-        $newGeneration->sortByFitness();
+        $newGeneration = $this->replenish($newGeneration, $populationSize, false);
 
         return $newGeneration;
     }
 
-    /**
-     * @param SpecimenCollection $newGeneration
-     * @param SpecimenCollection $oldGeneration
-     * @return SpecimenCollection
-     */
-    private function preventRegression(SpecimenCollection $newGeneration, SpecimenCollection $oldGeneration):SpecimenCollection {
-
-        $this->evaluate($newGeneration);
-        $maxPreservedSpecimen = $preservedSpecimenCount = 5;
-        while ($preservedSpecimenCount) {}
-        if ($newGeneration->getSpecimen($maxPreservedSpecimen - $preservedSpecimenCount)->getEvaluation()->getMainFitness() <
-                $oldGeneration->getSpecimen($maxPreservedSpecimen - $preservedSpecimenCount)->getEvaluation()->getMainFitness()
-        ) {
-            $newGeneration->removeSpecimen($newGeneration->count() - 1 - $maxPreservedSpecimen + $preservedSpecimenCount);
-            $newGeneration->addSpecimen($oldGeneration->getSpecimen($maxPreservedSpecimen - $preservedSpecimenCount));
-            $preservedSpecimenCount--;
-        }
-
-        return $newGeneration;
-    }
 
     private function evaluate(SpecimenCollection $specimens) {
 
@@ -128,20 +92,24 @@ class Evolver implements EvolverInterface
      * @param int $populationSize
      * @return SpecimenCollection
      */
-    private function recombine(SpecimenCollection $specimens, int $populationSize):SpecimenCollection {
-        return $this->recombinator->recombine($specimens, $populationSize);
-    }
-
-    private function mutate(SpecimenCollection $specimens) {
-        $numberOfProtectedSpecimen = floor($this->protectFromMutationRate * $specimens->count());
-        /** @var SpecimenInterface $specimen */
-        foreach ($specimens as $key => $specimen) {
-            if ($key >= $numberOfProtectedSpecimen) {
-                $genotype = $this->mutator->mutate($specimen->getGenotype());
-                $specimen->setGenotype($genotype);
-            }
-
+    private function replenish(SpecimenCollection $specimens, int $populationSize, bool $beCreative):SpecimenCollection {
+        $currentPopulationSize = count($specimens);
+        $replenishers = ($beCreative && count($this->creativeReplenishers)) ?
+            $this->creativeReplenishers : $this->replenishers;
+        $totalWeight = 0;
+        foreach ($replenishers as $replenisher) {
+            $totalWeight += $replenisher->getWeight();
         }
+
+        $totalNumSpecimenToReplenish = $populationSize - $currentPopulationSize;
+        foreach ($replenishers as $replenisher) {
+            $currentNumSpecimenToReplenish = ceil($totalNumSpecimenToReplenish * $replenisher->getWeight() / $totalWeight);
+            $currentPopulationSize += $currentNumSpecimenToReplenish;
+            $specimens = $replenisher->replenish($specimens, min($populationSize, $currentPopulationSize));
+            $this->evaluate($specimens);
+            $specimens->sortByFitness();
+        }
+        return $specimens;
     }
 
 }

@@ -12,8 +12,8 @@ use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
  */
 interface SpecimenInterface
 {
-    /** @var GenotypeInterface */
-    public function getGenotype();
+    /** @return GenotypeInterface */
+    public function getGenotype(): GenotypeInterface;
     public function setGenotype(GenotypeInterface $genotype);
     public function getEvaluation():FitnessInterface;
     public function setEvaluation(FitnessInterface $evaluation);
