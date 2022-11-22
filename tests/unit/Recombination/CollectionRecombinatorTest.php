@@ -15,7 +15,7 @@ class CollectionRecombinatorTest extends TestCase
         $intRandomizer = $this->createMock(IntRandomizer::class);
         $intRandomizer->method('randomInt')->willReturnOnConsecutiveCalls(1,2);
         $individualRecombinator = $this->createMock(SymbolArrayCrossoverRecombinator::class);
-        $recombinator = new CollectionRecombinator($individualRecombinator, $intRandomizer);
+        $recombinator = new CollectionRecombinator($individualRecombinator, $intRandomizer,1);
         $specimenCollection = $this->createMock(SpecimenCollection::class);
         $specimenCollection->method('count')->willReturn(2);
         $specimen1 = $this->createMock(Specimen::class);
