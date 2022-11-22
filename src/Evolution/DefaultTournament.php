@@ -6,36 +6,60 @@ use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollectionContainer;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenGeneratorInterface;
 
-class DefaultTournament
+class DefaultTournament implements TournamentInterface
 {
     use SpecimenCollectionContainer;
-    /** @var EvolverInterface */
-    private $evolver;
+    use EvolverContainer;
 
-    /** @var SpecimenGeneratorInterface */
-    private $specimenGenerator;
+    /** @var int */
+    private $numRounds;
+    /** @var int  */
+    private $cleanupAfterNRounds;
 
-    /**
-     * @param EvolverInterface $evolver
-     * @param SpecimenGeneratorInterface $specimenGenerator
-     */
-    public function __construct(EvolverInterface $evolver, SpecimenGeneratorInterface $specimenGenerator) {
-        $this->evolver = $evolver;
-        $this->specimenGenerator = $specimenGenerator;
-    }
 
-    public function setup(int $populationSize) {
-        $this->specimenCollection = $this->specimenGenerator->generateSpecimen($populationSize);
-    }
 
-    public function runTournament($numRounds, $cleanupAfterNRounds) {
-        for ($i = 0; $i<$numRounds; $i++) {
+    public function runTournament() {
+        for ($i = 0; $i<$this->numRounds; $i++) {
             $this->specimenCollection = $this->evolver->evolve($this->specimenCollection);
-            if ($i > 0 && ($i % $cleanupAfterNRounds === 0)) {
+            if ($i > 0 && ($i % $this->cleanupAfterNRounds === 0)) {
                 $this->specimenCollection = $this->evolver->cleanup($this->specimenCollection);
             }
         }
     }
+
+    /**
+     * @return int
+     */
+    public function getNumRounds(): int
+    {
+        return $this->numRounds;
+    }
+
+    /**
+     * @param int $numRounds
+     */
+    public function setNumRounds(int $numRounds): void
+    {
+        $this->numRounds = $numRounds;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCleanupAfterNRounds(): int
+    {
+        return $this->cleanupAfterNRounds;
+    }
+
+    /**
+     * @param int $cleanupAfterNRounds
+     */
+    public function setCleanupAfterNRounds(int $cleanupAfterNRounds): void
+    {
+        $this->cleanupAfterNRounds = $cleanupAfterNRounds;
+    }
+
+
 
 
 }
