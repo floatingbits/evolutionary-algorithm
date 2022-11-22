@@ -3,15 +3,14 @@
 namespace FloatingBits\EvolutionaryAlgorithm\Evolution;
 
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollection;
+use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenCollectionContainer;
 use FloatingBits\EvolutionaryAlgorithm\Specimen\SpecimenGeneratorInterface;
 
-class Tournament
+class DefaultTournament
 {
+    use SpecimenCollectionContainer;
     /** @var EvolverInterface */
     private $evolver;
-
-    /** @var SpecimenCollection */
-    private $specimenCollection;
 
     /** @var SpecimenGeneratorInterface */
     private $specimenGenerator;
@@ -36,13 +35,6 @@ class Tournament
                 $this->specimenCollection = $this->evolver->cleanup($this->specimenCollection);
             }
         }
-    }
-
-    /**
-     * @return SpecimenCollection
-     */
-    public function getSpecimenCollection(): SpecimenCollection {
-        return $this->specimenCollection;
     }
 
 
