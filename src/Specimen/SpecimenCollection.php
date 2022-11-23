@@ -22,6 +22,14 @@ class SpecimenCollection implements \Iterator, \Countable
         return $this->ratableSpecimens[$key];
     }
 
+    /**
+     * @return float
+     */
+    public function getBestMainFitness(): float {
+        $this->sortByFitness();
+        return $this->getSpecimen(0)->getEvaluation()->getMainFitness();
+    }
+
     public function sortByFitness() {
         uasort($this->ratableSpecimens, function(SpecimenInterface $a, SpecimenInterface $b) {
             if ($a->getEvaluation()->getMainFitness() > $b->getEvaluation()->getMainFitness()) {
