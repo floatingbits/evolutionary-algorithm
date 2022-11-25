@@ -28,7 +28,9 @@ from the outermost structure to the innermost.
 You will find **Evolver** and **Tournament** interfaces and default implementations here.
 A **Tournament** is a multiple run of the evolutionary process, that keeps track of a set of **Specimen**,
 which is modified throughout this process. A developer using this library will not need to write their own 
-implementations here, but they will need to provide the necessary components that are injected.
+implementations here, but they will need to provide the necessary components that are injected.  
+An **Evolver** has got all the necessary component implementations to run the individual evolutionary process consisting
+of **Selection**, **Mutation** and **Recombination** (in the default implementation).
 #### /src/Specimen
 A collection of **Specimen** will be transformed throughout the process of evolution during a tournament. A specimen
 holds a problem specific **Genotype** which will be evaluated to a **Fitness** value, that is also stored inside of the
