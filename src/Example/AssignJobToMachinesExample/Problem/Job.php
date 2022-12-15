@@ -14,7 +14,7 @@ class Job
     /**
      * @param float $defaultTime
      */
-    public function __construct(float $defaultTime) {
+    public function __construct(float $defaultTime = 0) {
         $this->defaultTime = $defaultTime;
     }
 
@@ -51,5 +51,21 @@ class Job
      */
     public function getTimeForMachineNo(int $machineNo): float {
         return  $this->timeForMachines[$machineNo] ?? $this->defaultTime;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDefaultTime(): float
+    {
+        return $this->defaultTime;
+    }
+
+    /**
+     * @param float $defaultTime
+     */
+    public function setDefaultTime(float $defaultTime): void
+    {
+        $this->defaultTime = $defaultTime;
     }
 }
