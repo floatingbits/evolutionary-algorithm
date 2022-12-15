@@ -67,7 +67,7 @@ class SymbolArrayCrossoverRecombinator implements IndividualRecombinatorInterfac
         $length = $returnGenotype->getSymbolLength();
         while ($crossoverPartsLeft--) {
             if ($crossoverPartsLeft) {
-                $avgIncrement = ($length - $currentPosition) / ($crossoverPartsLeft + 1);
+                $avgIncrement = round(($length - $currentPosition) / ($crossoverPartsLeft + 1));
 
                 $maxIncrement = min(2 * $avgIncrement, $length - $currentPosition);
                 $this->intRandomizer->setMax($maxIncrement);
