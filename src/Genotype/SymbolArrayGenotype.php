@@ -11,7 +11,7 @@ use FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol\SymbolInterface;
  * @package FloatingBits\EvolutionaryAlgorithm\Genotype
  * @template T
  */
-class SymbolArrayGenotype implements SymbolArrayGenotypeInterface
+class SymbolArrayGenotype implements SymbolArrayGenotypeInterface, SortableGenotypeInterface
 {
     /** @var SymbolInterface<T>[] */
     private $data = [];
@@ -22,6 +22,13 @@ class SymbolArrayGenotype implements SymbolArrayGenotypeInterface
     public function __construct(SymbolFactoryInterface $symbolFactory)
     {
         $this->symbolFactory = $symbolFactory;
+    }
+
+    public function getComparableString(): string
+    {
+        return array_reduce($this->data,function($carry, SymbolInterface $item) {
+            return $carry . $item->getValue();
+        }, '');
     }
 
     public function initialize(int $length)

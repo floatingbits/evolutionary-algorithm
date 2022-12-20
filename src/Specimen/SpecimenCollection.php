@@ -30,13 +30,16 @@ class SpecimenCollection implements \Iterator, \Countable
         return $this->getSpecimen(0)->getEvaluation()->getMainFitness();
     }
 
-    public function sortByFitness() {
-        uasort($this->ratableSpecimens, function(SpecimenInterface $a, SpecimenInterface $b) {
+    public function sortByFitness(callable $equalsSortFunction = null) {
+        uasort($this->ratableSpecimens, function(SpecimenInterface $a, SpecimenInterface $b) use($equalsSortFunction) {
             if ($a->getEvaluation()->getMainFitness() > $b->getEvaluation()->getMainFitness()) {
                 return -1;
             }
             elseif ($a->getEvaluation()->getMainFitness() < $b->getEvaluation()->getMainFitness()) {
                 return 1;
+            }
+            if ($equalsSortFunction) {
+                return $equalsSortFunction($a, $b);
             }
             return 0;
         });
