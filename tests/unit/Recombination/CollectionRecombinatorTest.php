@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class CollectionRecombinatorTest extends TestCase
 {
-    public function testRecombine() {
+    public function testReplenish() {
         $intRandomizer = $this->createMock(IntRandomizer::class);
         $intRandomizer->method('randomInt')->willReturnOnConsecutiveCalls(1,2);
         $individualRecombinator = $this->createMock(SymbolArrayCrossoverRecombinator::class);
@@ -29,7 +29,7 @@ class CollectionRecombinatorTest extends TestCase
         $specimenCollection->expects($this->once())->method('addSpecimen');
         $individualRecombinator->expects($this->once())->method('recombine');
 
-        $newCollection = $recombinator->recombine($specimenCollection, 3);
+        $newCollection = $recombinator->replenish($specimenCollection, 3);
 
 
     }

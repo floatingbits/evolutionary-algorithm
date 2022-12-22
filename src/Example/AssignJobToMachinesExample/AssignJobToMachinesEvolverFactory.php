@@ -15,7 +15,6 @@ use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\BooleanRandomizer;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizer;
 use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinator;
-use FloatingBits\EvolutionaryAlgorithm\Recombination\CollectionRecombinatorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Recombination\SymbolArrayCrossoverRecombinator;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SelectorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Selection\SimpleSelector;
