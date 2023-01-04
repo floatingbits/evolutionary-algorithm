@@ -6,7 +6,7 @@ use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizerInterface;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\StringRandomizerInterface;
 
 /**
- * @implements SymbolFactoryInterface<string>
+ * @template-implements SymbolFactoryInterface<string>
  */
 class StringSymbolFactory implements SymbolFactoryInterface
 {

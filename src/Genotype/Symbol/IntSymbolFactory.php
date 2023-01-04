@@ -5,7 +5,7 @@ namespace FloatingBits\EvolutionaryAlgorithm\Genotype\Symbol;
 use FloatingBits\EvolutionaryAlgorithm\Randomizer\IntRandomizerInterface;
 
 /**
- * @implements SymbolFactoryInterface<int>
+ * @template-implements SymbolFactoryInterface<int>
  */
 class IntSymbolFactory implements SymbolFactoryInterface
 {

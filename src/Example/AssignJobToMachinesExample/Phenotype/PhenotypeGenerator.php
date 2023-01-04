@@ -6,10 +6,9 @@ use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genoty
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\FloatArrayPhenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeGeneratorInterface;
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Problem\Job;
-use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
 
 /**
- * @implements PhenotypeGeneratorInterface<Genotype, FloatArrayPhenotypeInterface>
+ * @template-implements PhenotypeGeneratorInterface<Genotype, FloatArrayPhenotypeInterface>
  */
 class PhenotypeGenerator implements PhenotypeGeneratorInterface
 {

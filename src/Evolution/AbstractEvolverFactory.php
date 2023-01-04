@@ -34,6 +34,9 @@ abstract class AbstractEvolverFactory implements EvolverFactoryInterface
      * @return CollectionReplenishInterface[]
      */
     abstract protected function createReplenishers(): array;
+    /**
+     * @return CollectionReplenishInterface[]
+     */
     protected function createCreativeReplenishers(): array {
         return [];
     }

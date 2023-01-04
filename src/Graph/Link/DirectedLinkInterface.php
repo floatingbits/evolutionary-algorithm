@@ -25,7 +25,7 @@ interface DirectedLinkInterface
 
     /**
      * @param T $endNode
-     * No further/native php typehinting to not override Template
+     * No further/native php type hinting to not override Template
      */
     public function setEndNode($endNode);
 

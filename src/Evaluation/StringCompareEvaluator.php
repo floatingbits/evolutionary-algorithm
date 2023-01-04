@@ -2,8 +2,6 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Evaluation;
 
-use FloatingBits\EvolutionaryAlgorithm\Phenotype\FloatArrayPhenotypeInterface;
-use FloatingBits\EvolutionaryAlgorithm\Phenotype\StringPhenotype;
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\StringPhenotypeInterface;
 
 class StringCompareEvaluator implements EvaluatorInterface

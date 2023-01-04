@@ -4,6 +4,9 @@ namespace FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\
 
 class ExampleProblemInstance extends AbstractProblem
 {
+    /**
+     * @return Job[]
+     */
     public function getJobs(): array
     {
         $jobs = [];

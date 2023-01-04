@@ -36,7 +36,7 @@ trait DirectedLinkTrait
      * @param NodeInterface<T> $node
      * @return mixed
      */
-    public function setEndNode( $node) {
+    public function setEndNode($node) {
         $this->endNode = $node;
     }
 }

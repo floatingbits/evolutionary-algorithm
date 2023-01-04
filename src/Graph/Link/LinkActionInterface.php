@@ -2,6 +2,9 @@
 
 namespace FloatingBits\EvolutionaryAlgorithm\Graph\Link;
 /**
+ * @todo: consider to remove this because YAGNI
+ */
+/**
  * @template T
  */
 interface LinkActionInterface

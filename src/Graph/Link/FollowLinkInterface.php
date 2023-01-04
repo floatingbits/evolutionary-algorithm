@@ -4,5 +4,5 @@ namespace FloatingBits\EvolutionaryAlgorithm\Graph\Link;
 
 interface FollowLinkInterface
 {
-    public function follow();
+    public function follow():void;
 }

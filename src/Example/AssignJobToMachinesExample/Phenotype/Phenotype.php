@@ -6,6 +6,9 @@ use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Genoty
 use FloatingBits\EvolutionaryAlgorithm\Phenotype\FloatArrayPhenotypeInterface;
 use FloatingBits\EvolutionaryAlgorithm\Example\AssignJobToMachinesExample\Problem\Job;
 
+/**
+ * This class is where the actual problem is implemented
+ */
 class Phenotype implements FloatArrayPhenotypeInterface
 {
     /** @var Genotype  */
