@@ -29,6 +29,13 @@ class SimpleNode implements NodeInterface
     }
 
 
-
+    public function __clone()
+    {
+        if (is_object($this->content)) {
+            $this->content = clone $this->content;
+        }
+        $this->outgoingLinks = clone $this->outgoingLinks;
+        $this->incomingLinks = clone $this->incomingLinks;
+    }
 
 }

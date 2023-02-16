@@ -6,9 +6,11 @@ namespace FloatingBits\EvolutionaryAlgorithm\Specimen;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\FitnessInterface;
 use FloatingBits\EvolutionaryAlgorithm\Evaluation\SimpleFitness;
 use FloatingBits\EvolutionaryAlgorithm\Genotype\GenotypeInterface;
+use FloatingBits\EvolutionaryAlgorithm\Phenotype\PhenotypeInterface;
 
 /**
  * @template T0 of GenotypeInterface
+ * @template T1 of PhenotypeInterface
  */
 class Specimen implements SpecimenInterface
 {
@@ -16,9 +18,27 @@ class Specimen implements SpecimenInterface
     private $evaluation;
     /** @var T0 */
     private $genotype;
+    /** @var T1 */
+    private $phenotype;
 
     public function __construct() {
         $this->evaluation = new SimpleFitness(0);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhenotype(): ?PhenotypeInterface
+    {
+        return $this->phenotype;
+    }
+
+    /**
+     * @param PhenotypeInterface $phenotype
+     */
+    public function setPhenotype(PhenotypeInterface $phenotype): void
+    {
+        $this->phenotype = $phenotype;
     }
 
     /**

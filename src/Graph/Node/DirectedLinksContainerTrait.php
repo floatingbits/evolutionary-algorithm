@@ -34,6 +34,21 @@ trait DirectedLinksContainerTrait
     {
         $this->outgoingLinks->detach($directedLink);
     }
+    /**
+     * @return void
+     */
+    public function removeAllOutgoingLinks(): void
+    {
+        $this->outgoingLinks->removeAll($this->outgoingLinks);
+    }
+
+    /**
+     * @return void
+     */
+    public function removeAllIncomingLinks(): void
+    {
+        $this->incomingLinks->removeAll($this->incomingLinks);
+    }
 
     /**
      * @return DirectedLinkInterface<T>[]

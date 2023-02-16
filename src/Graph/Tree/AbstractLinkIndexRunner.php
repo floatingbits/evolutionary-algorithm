@@ -14,15 +14,22 @@ abstract class AbstractLinkIndexRunner implements FollowLinkCallableInterface {
         $this->runToIndex = $runToIndex;
     }
     public function __invoke(DirectedLinkInterface $directedLink): bool {
-
         if ($this->runToIndex === $this->currentIndex) {
+
             $this->linkReached($directedLink);
             return true;
         }
         $this->currentIndex++;
         return false;
     }
+    public function reset() {
+        $this->currentIndex = 0;
+    }
 
     abstract protected function linkReached(DirectedLinkInterface $directedLink);
+    public function startNode(NodeInterface $node) {
+    }
+    public function endNode(NodeInterface $node) {
+    }
 
 }

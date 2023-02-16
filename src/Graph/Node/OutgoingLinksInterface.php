@@ -11,5 +11,6 @@ interface OutgoingLinksInterface
      */
     public function getOutgoingLinks(): array;
     public function removeOutgoingLink(DirectedLinkInterface $directedLink): void;
+    public function removeAllOutgoingLinks(): void;
     public function addOutgoingLink(DirectedLinkInterface $directedLink): void;
 }

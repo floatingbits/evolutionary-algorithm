@@ -76,6 +76,7 @@ class Evolver implements EvolverInterface
             $phenotype = $this->phenotypeGenerator->generatePhenotype($specimen->getGenotype());
             $fitness = $this->evaluator->evaluate($phenotype);
             $specimen->setEvaluation($fitness);
+            $specimen->setPhenotype($phenotype);
         }
     }
 

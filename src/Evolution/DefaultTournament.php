@@ -21,7 +21,7 @@ class DefaultTournament implements TournamentInterface
     public function runTournament() {
         for ($i = 0; $i<$this->numRounds; $i++) {
             $this->specimenCollection = $this->evolver->evolve($this->specimenCollection);
-            if ($i > 0 && ($i % $this->cleanupAfterNRounds === 0)) {
+            if ($this->cleanupAfterNRounds && $i > 0 && ($i % $this->cleanupAfterNRounds === 0)) {
                 $this->specimenCollection = $this->evolver->cleanup($this->specimenCollection);
             }
         }

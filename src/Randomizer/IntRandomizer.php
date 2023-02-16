@@ -7,14 +7,10 @@ namespace FloatingBits\EvolutionaryAlgorithm\Randomizer;
 class IntRandomizer implements ConfigurableIntRandomizerInterface, BiasedRandomizerInterface
 {
     /** @var int */
-    private $min;
+    private int $min;
     /** @var int */
-    private $max;
-    /** @var float */
-    private $bias;
-
-    /** @var BiasInterface */
-    private $biasStrategy;
+    private int $max;
+    use BiasedTrait;
 
     public function __construct(int $max = 0, int $min = 0,  BiasInterface $biasStrategy = null, float $bias = 1) {
         if ($max === 0 && $min === 0) {
@@ -32,13 +28,7 @@ class IntRandomizer implements ConfigurableIntRandomizerInterface, BiasedRandomi
 
     }
 
-    /**
-     * @param float $bias
-     */
-    public function setBias(float $bias): void
-    {
-        $this->bias = $bias;
-    }
+
 
     /**
      * @param int $min
