@@ -18,7 +18,6 @@ class TreeGraphLinkRandomizer implements TreeGraphLinkRandomizerInterface
         $this->randomizer = $randomizer;
     }
     public function fetchRandomLink(TreeGraphInterface $treeGraph): ?DirectedLinkInterface {
-        $this->randomizer->setMin(0);
         $this->randomizer->setMax($treeGraph->countLinks() - 1);
         $randomLinkIndex = $this->randomizer->randomInt();
         $linkIndexFinder = new LinkIndexFinder($randomLinkIndex);

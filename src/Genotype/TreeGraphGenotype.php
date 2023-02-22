@@ -15,7 +15,7 @@ class TreeGraphGenotype implements TreeGraphGenotypeInterface
     private ?TreeGraphInterface $treeGraph;
     public function equals(GenotypeInterface $otherGenotype): bool
     {
-        // TODO: Implement equals() method.
+        return false;
     }
 
     public function __clone()
